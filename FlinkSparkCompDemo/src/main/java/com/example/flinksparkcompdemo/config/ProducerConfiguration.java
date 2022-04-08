@@ -17,7 +17,6 @@ import java.util.Map;
 @Configuration
 public class ProducerConfiguration {
 
-    // TODO: should i add prefix spring here?
     @Value("${spring.kafka.bootstrap-servers}")
     private String bootstrapServers;
 

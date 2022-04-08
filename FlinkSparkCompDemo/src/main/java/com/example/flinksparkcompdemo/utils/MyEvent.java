@@ -4,19 +4,19 @@ import java.time.ZonedDateTime;
 
 public class MyEvent {
 
-    private ZonedDateTime timestamp;
+    private String timestamp;
     private String msg;
 
-    public MyEvent(ZonedDateTime timestamp, String msg) {
+    public MyEvent(String timestamp, String msg) {
         this.timestamp = timestamp;
         this.msg = msg;
     }
 
-    public ZonedDateTime getTimestamp() {
+    public String getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(ZonedDateTime timestamp) {
+    public void setTimestamp(String timestamp) {
         this.timestamp = timestamp;
     }
 
@@ -26,5 +26,13 @@ public class MyEvent {
 
     public void setMsg(String msg) {
         this.msg = msg;
+    }
+
+    @Override
+    public String toString() {
+        return "MyEvent{" +
+                "timestamp='" + timestamp + '\'' +
+                ", msg='" + msg + '\'' +
+                '}';
     }
 }
