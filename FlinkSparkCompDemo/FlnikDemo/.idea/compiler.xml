@@ -9,5 +9,8 @@
         <module name="FlnikDemo" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="FlnikDemo" target="17" />
+    </bytecodeTargetLevel>
   </component>
 </project>

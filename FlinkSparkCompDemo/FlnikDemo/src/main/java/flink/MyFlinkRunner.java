@@ -17,7 +17,7 @@ public class MyFlinkRunner {
 
     private final static String BOOTSTRAP_SERVER = "localhost:9092";
     private final static String INPUT_TOPIC = "spark_flink_comp_topic_test";
-    private final static String OUTPUT_TOPIC = "spark_flink_comp_topic_test";
+    private final static String OUTPUT_TOPIC = "spark_flink_comp_topic_test_output";
     private final static String GROUP_ID = "test_group";
 
 

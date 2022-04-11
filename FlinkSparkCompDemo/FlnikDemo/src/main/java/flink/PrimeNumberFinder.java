@@ -12,10 +12,10 @@ public class PrimeNumberFinder extends ProcessFunction<String, String> {
         long currentIndex = 0;
         long currentNumber = 0;
         while (currentIndex < primeNumberIndex) {
+            currentNumber++;
             if (isPrime(currentNumber)) {
                 currentIndex++;
             }
-            currentNumber++;
         }
         out.collect(String.valueOf(currentNumber));
     }
