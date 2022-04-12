@@ -6,9 +6,12 @@ import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Encoders;
 import org.apache.spark.sql.SparkSession;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class SparkDemoApp {
 
-    private static final String INPUT_FILE = "/home/xabi/Documents/Code/ideal-broccoli/FlinkSparkCompDemo/SparkDemo/parsedInput.txt";
+    private static final String INPUT_FILE = "/home/xabi/Documents/Code/ideal-broccoli/FlinkSparkCompDemo/SparkDemo/spark_flink_comp_topic_test.csv";
 
     public static void main(String[] args) {
         SparkSession spark = SparkSession
@@ -24,8 +27,9 @@ public class SparkDemoApp {
     }
 
 
-    public static String processElement(String value) {
-
+    public static String processElement(String line) {
+        List<String> items = Arrays.asList(line.split(";"));
+        String value = items.get(1);
         long primeNumberIndex = Long.parseLong(value);
         long currentIndex = 0;
         long currentNumber = 0;
