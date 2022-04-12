@@ -16,9 +16,9 @@ public class MyGenerator {
     private final static String BOOTSTRAP_SERVERS = "localhost:9092";
     private final static String TOPIC_NAME = "spark_flink_comp_topic_test";
     //private final static long DEFAULT_RATE = 100;
-    private final static long DEFAULT_RATE = 10;
-    private final static int DEFAULT_MIN = 100;
-    private final static int DEFAULT_MAX = 1000;
+    private final static long DEFAULT_RATE = 100;
+    private final static int DEFAULT_MIN = 10000;
+    private final static int DEFAULT_MAX = 100000;
     private static long currentKey = 0;
 
     @Scheduled(fixedRate = DEFAULT_RATE)

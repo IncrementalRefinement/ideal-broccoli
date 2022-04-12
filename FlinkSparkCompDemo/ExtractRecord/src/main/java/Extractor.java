@@ -41,6 +41,7 @@ public class Extractor {
             }
             for (ConsumerRecord<String, String> record : records) {
                 writer.println(record.key()  + ";" + record.value() + ";" + record.timestamp());
+                System.out.println(record.timestampType());
             }
         }
         writer.close();

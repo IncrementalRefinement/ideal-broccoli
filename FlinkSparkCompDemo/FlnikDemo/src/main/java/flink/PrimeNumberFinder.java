@@ -3,6 +3,8 @@ package flink;
 import org.apache.flink.streaming.api.functions.ProcessFunction;
 import org.apache.flink.util.Collector;
 
+import java.util.Date;
+
 public class PrimeNumberFinder extends ProcessFunction<String, String> {
 
     @Override
@@ -17,7 +19,9 @@ public class PrimeNumberFinder extends ProcessFunction<String, String> {
                 currentIndex++;
             }
         }
-        out.collect(String.valueOf(currentNumber));
+        Date theDate = new Date();
+        String res = currentNumber + ";" + theDate.getTime();
+        out.collect(res);
     }
 
     private boolean isPrime(long num) {
