@@ -5,8 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2510ed9d-a738-4b26-8be0-c92c3559fa37" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../EventGenerator/src/main/java/com/example/eventgenerator/generator/MyGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/../EventGenerator/src/main/java/com/example/eventgenerator/generator/MyGenerator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SparkDemo/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../SparkDemo/pom.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -103,6 +102,7 @@
       <workItem from="1649665282703" duration="3722000" />
       <workItem from="1649672526603" duration="77000" />
       <workItem from="1649672630707" duration="2501000" />
+      <workItem from="1649744599673" duration="249000" />
     </task>
     <servers />
   </component>
