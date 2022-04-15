@@ -4,6 +4,7 @@ package com.example.idealbroccoli.controller;
 import com.example.idealbroccoli.entity.Job;
 import com.example.idealbroccoli.payload.UniversalResponse;
 import com.example.idealbroccoli.service.JobService;
+import com.example.idealbroccoli.service.UniversalJobControlService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,9 +20,14 @@ public class JobController {
     @Autowired
     JobService jobService;
 
+    @Autowired
+    UniversalJobControlService jobController;
+
     @PostMapping
     public ResponseEntity<UniversalResponse<Void>> createJob(@Valid @RequestBody Job job) {
         jobService.createNewJob(job);
+        jobController.addJob(job);
+
         UniversalResponse<Void> response = new UniversalResponse<>();
         response.setSuccess(true);
         return new ResponseEntity<>(response, HttpStatus.OK);
@@ -30,6 +36,7 @@ public class JobController {
     @GetMapping
     public ResponseEntity<UniversalResponse<List<Job>>> queryJob() {
         List<Job> jobList = jobService.queryAllJob();
+
         UniversalResponse<List<Job>> response = new UniversalResponse<>();
         response.setSuccess(true);
         response.setPayload(jobList);
@@ -39,6 +46,8 @@ public class JobController {
     @DeleteMapping
     public ResponseEntity<UniversalResponse<Job>> deleteJob(@RequestParam(name = "jobId") Long id) {
         Job deletedJob = jobService.deleteByID(id);
+        jobController.deleteJob(deletedJob);
+
         UniversalResponse<Job> response = new UniversalResponse<>();
         response.setSuccess(true);
         response.setPayload(deletedJob);
