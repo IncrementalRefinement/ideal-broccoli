@@ -1,8 +1,12 @@
 package com.example.idealbroccoli.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 import javax.persistence.*;
 
 @Entity
+@JsonIgnoreProperties({"hibernateLazyInitializer"})
 public class Job {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
