@@ -25,13 +25,13 @@ public class TaskController {
     @GetMapping(value = "/test/register")
     public String registerTask() {
         TestRunnable newRunnable = new TestRunnable(1, "test runnable!!!");
-        schedulerService.registerTask(newRunnable, 1000);
+        schedulerService.registerJob(newRunnable, 1000);
         return null;
     }
 
     @GetMapping(value = "/test/cancel")
     public String cancelTask() {
-        schedulerService.cancelTask(1);
+        schedulerService.cancelJob(1);
         return null;
     }
 }

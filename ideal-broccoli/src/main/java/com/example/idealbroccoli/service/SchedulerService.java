@@ -4,7 +4,9 @@ import com.example.idealbroccoli.util.job.RunnableWithId;
 
 public interface SchedulerService {
 
-    public void registerTask(RunnableWithId task, long rate);
+    public void registerJob(RunnableWithId job, long rate);
 
-    public void cancelTask(long taskId);
+    public void cancelJob(long taskId);
+
+    public void executeJobOnce(RunnableWithId job);
 }

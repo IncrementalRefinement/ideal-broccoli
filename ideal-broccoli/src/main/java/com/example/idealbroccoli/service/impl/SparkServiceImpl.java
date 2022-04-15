@@ -21,12 +21,16 @@ public class SparkServiceImpl implements SparkService {
     @Override
     public void addJob(Job theJob) {
         RunnableWithId runnableWithId = constructSparkRunnable(theJob);
-        schedulerService.registerTask(runnableWithId, theJob.getExecuteRate());
+        if (theJob.getScheduledJob()) {
+            schedulerService.registerJob(runnableWithId, theJob.getExecuteRate());
+        } else {
+            schedulerService.executeJobOnce(runnableWithId);
+        }
     }
 
     @Override
     public void deleteJob(Job theJob) {
-        schedulerService.cancelTask(theJob.getId());
+        schedulerService.cancelJob(theJob.getId());
     }
 
     private RunnableWithId constructSparkRunnable(Job theJob) {

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ScheduledFuture;
@@ -18,14 +19,20 @@ public class SchedulerServiceImpl implements SchedulerService {
     @Autowired
     ThreadPoolTaskScheduler threadPoolTaskScheduler;
 
-    public void registerTask(RunnableWithId job, long rate) {
+    public void registerJob(RunnableWithId job, long rate) {
         ScheduledFuture<?> future = threadPoolTaskScheduler.scheduleAtFixedRate(job, rate);
         registeredSchedulers.put(job.getId(), future);
     }
 
-    public void cancelTask(long taskId) {
-        ScheduledFuture<?> future = registeredSchedulers.get(taskId);
+
+    @Override
+    public void executeJobOnce(RunnableWithId job) {
+        threadPoolTaskScheduler.schedule(job, new Date());
+    }
+
+    public void cancelJob(long jobId) {
+        ScheduledFuture<?> future = registeredSchedulers.get(jobId);
         future.cancel(false);
-        registeredSchedulers.remove(taskId);
+        registeredSchedulers.remove(jobId);
     }
 }
