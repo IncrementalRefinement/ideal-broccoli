@@ -1,4 +1,4 @@
-package com.example.idealbroccoli.util.task;
+package com.example.idealbroccoli.util.job;
 
 public class TestRunnable extends RunnableWithId {
 

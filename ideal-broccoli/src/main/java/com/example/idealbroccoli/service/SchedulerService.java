@@ -1,6 +1,6 @@
 package com.example.idealbroccoli.service;
 
-import com.example.idealbroccoli.util.task.RunnableWithId;
+import com.example.idealbroccoli.util.job.RunnableWithId;
 
 public interface SchedulerService {
 

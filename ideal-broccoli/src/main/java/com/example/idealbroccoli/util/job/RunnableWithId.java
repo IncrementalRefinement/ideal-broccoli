@@ -1,4 +1,4 @@
-package com.example.idealbroccoli.util.task;
+package com.example.idealbroccoli.util.job;
 
 public abstract class RunnableWithId implements Runnable {
 

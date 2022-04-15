@@ -20,13 +20,9 @@ public class JobController {
     @Autowired
     JobService jobService;
 
-    @Autowired
-    UniversalJobControlService jobController;
-
     @PostMapping
     public ResponseEntity<UniversalResponse<Void>> createJob(@Valid @RequestBody Job job) {
         jobService.createNewJob(job);
-        jobController.addJob(job);
 
         UniversalResponse<Void> response = new UniversalResponse<>();
         response.setSuccess(true);
@@ -46,7 +42,6 @@ public class JobController {
     @DeleteMapping
     public ResponseEntity<UniversalResponse<Job>> deleteJob(@RequestParam(name = "jobId") Long id) {
         Job deletedJob = jobService.deleteByID(id);
-        jobController.deleteJob(deletedJob);
 
         UniversalResponse<Job> response = new UniversalResponse<>();
         response.setSuccess(true);

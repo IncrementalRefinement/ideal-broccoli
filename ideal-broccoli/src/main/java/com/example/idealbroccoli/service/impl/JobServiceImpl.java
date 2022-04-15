@@ -15,19 +15,22 @@ public class JobServiceImpl implements JobService {
     @Autowired
     JobRepository jobRepository;
 
+    @Autowired
+    UniversalJobControlServiceImpl jobController;
+
     @Override
     @Transactional
     public Job deleteByID(Long id) {
-        // TODO
         Job theJob = jobRepository.getById(id);
         jobRepository.delete(theJob);
+        jobController.deleteJob(theJob);
         return theJob;
     }
 
     @Override
     public void createNewJob(Job job) {
-        // TODO
         jobRepository.save(job);
+        jobController.addJob(job);
     }
 
     @Override

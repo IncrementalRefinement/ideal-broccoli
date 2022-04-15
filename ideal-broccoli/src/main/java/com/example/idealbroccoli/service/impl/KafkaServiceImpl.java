@@ -24,7 +24,7 @@ public class KafkaServiceImpl implements KafkaService {
     @Override
     @KafkaListener(topics = TOPIC_NAME, groupId = GROUP_ID)
     public void consumeMessage(String message) {
-        // TODO
+        // TODO: execute the job and generate the according record
         System.out.println(message);
     }
 }

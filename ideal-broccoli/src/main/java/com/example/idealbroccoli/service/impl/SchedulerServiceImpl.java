@@ -1,7 +1,7 @@
 package com.example.idealbroccoli.service.impl;
 
 import com.example.idealbroccoli.service.SchedulerService;
-import com.example.idealbroccoli.util.task.RunnableWithId;
+import com.example.idealbroccoli.util.job.RunnableWithId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 import org.springframework.stereotype.Service;
@@ -18,9 +18,9 @@ public class SchedulerServiceImpl implements SchedulerService {
     @Autowired
     ThreadPoolTaskScheduler threadPoolTaskScheduler;
 
-    public void registerTask(RunnableWithId task, long rate) {
-        ScheduledFuture<?> future = threadPoolTaskScheduler.scheduleAtFixedRate(task, rate);
-        registeredSchedulers.put(task.getId(), future);
+    public void registerTask(RunnableWithId job, long rate) {
+        ScheduledFuture<?> future = threadPoolTaskScheduler.scheduleAtFixedRate(job, rate);
+        registeredSchedulers.put(job.getId(), future);
     }
 
     public void cancelTask(long taskId) {
