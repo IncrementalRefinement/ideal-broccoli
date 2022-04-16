@@ -2,9 +2,8 @@ package com.example.idealbroccoli.service.impl;
 
 import com.example.idealbroccoli.entity.Job;
 import com.example.idealbroccoli.service.FlinkService;
-import com.example.idealbroccoli.service.RecordService;
 import com.example.idealbroccoli.service.SchedulerService;
-import com.example.idealbroccoli.util.job.FlinkRunnable;
+import com.example.idealbroccoli.util.job.EventProducerRunnableFactory;
 import com.example.idealbroccoli.util.job.RunnableWithId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,11 +15,11 @@ public class FlinkServiceImpl implements FlinkService {
     SchedulerService schedulerService;
 
     @Autowired
-    RecordService recordService;
+    EventProducerRunnableFactory eventProducerRunnableFactory;
 
     @Override
     public void addJob(Job theJob) {
-        RunnableWithId runnableWithId = constructFlinkRunnable(theJob);
+        RunnableWithId runnableWithId = eventProducerRunnableFactory.newJob(theJob);
         if (theJob.getScheduledJob()) {
             schedulerService.registerJob(runnableWithId, theJob.getExecuteRate());
         } else {
@@ -31,9 +30,5 @@ public class FlinkServiceImpl implements FlinkService {
     @Override
     public void deleteJob(Job theJob) {
         schedulerService.cancelJob(theJob.getId());
-    }
-
-    private RunnableWithId constructFlinkRunnable(Job theJob) {
-        return new FlinkRunnable(theJob, recordService);
     }
 }

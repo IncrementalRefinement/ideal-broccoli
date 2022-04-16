@@ -1,11 +1,10 @@
 package com.example.idealbroccoli.service.impl;
 
 import com.example.idealbroccoli.entity.Job;
-import com.example.idealbroccoli.service.RecordService;
 import com.example.idealbroccoli.service.SchedulerService;
 import com.example.idealbroccoli.service.SparkService;
+import com.example.idealbroccoli.util.job.EventProducerRunnableFactory;
 import com.example.idealbroccoli.util.job.RunnableWithId;
-import com.example.idealbroccoli.util.job.SparkRunnable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,11 +15,11 @@ public class SparkServiceImpl implements SparkService {
     SchedulerService schedulerService;
 
     @Autowired
-    RecordService recordService;
+    EventProducerRunnableFactory eventProducerRunnableFactory;
 
     @Override
     public void addJob(Job theJob) {
-        RunnableWithId runnableWithId = constructSparkRunnable(theJob);
+        RunnableWithId runnableWithId = eventProducerRunnableFactory.newJob(theJob);
         if (theJob.getScheduledJob()) {
             schedulerService.registerJob(runnableWithId, theJob.getExecuteRate());
         } else {
@@ -31,9 +30,5 @@ public class SparkServiceImpl implements SparkService {
     @Override
     public void deleteJob(Job theJob) {
         schedulerService.cancelJob(theJob.getId());
-    }
-
-    private RunnableWithId constructSparkRunnable(Job theJob) {
-        return new SparkRunnable(theJob, recordService);
     }
 }

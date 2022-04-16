@@ -9,7 +9,7 @@ public class SparkRunnable extends RunnableWithId {
     private Job jobDesc;
     private RecordService recordService;
 
-    public SparkRunnable(Job jobDesc, RecordService recordService) {
+    protected SparkRunnable(Job jobDesc, RecordService recordService) {
         super(jobDesc.getId());
         this.jobDesc = jobDesc;
         this.recordService = recordService;

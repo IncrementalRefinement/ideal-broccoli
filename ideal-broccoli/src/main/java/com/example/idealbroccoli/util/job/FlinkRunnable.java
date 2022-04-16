@@ -9,7 +9,7 @@ public class FlinkRunnable extends RunnableWithId {
     private Job jobDesc;
     private RecordService recordService;
 
-    public FlinkRunnable(Job jobDesc, RecordService recordService) {
+    protected FlinkRunnable(Job jobDesc, RecordService recordService) {
         super(jobDesc.getId());
         this.jobDesc = jobDesc;
         this.recordService = recordService;
