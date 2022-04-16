@@ -14,7 +14,7 @@ public class Job {
 
     private String jobType;
 
-    private Boolean isScheduledJob;
+    private boolean scheduledJob;
 
     private Long executeRate;
 
@@ -42,12 +42,12 @@ public class Job {
         this.jobType = jobType;
     }
 
-    public Boolean getScheduledJob() {
-        return isScheduledJob;
+    public boolean getScheduledJob() {
+        return scheduledJob;
     }
 
-    public void setScheduledJob(Boolean scheduledJob) {
-        isScheduledJob = scheduledJob;
+    public void setScheduledJob(boolean scheduledJob) {
+        this.scheduledJob = scheduledJob;
     }
 
     public Long getExecuteRate() {
