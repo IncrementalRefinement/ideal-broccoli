@@ -1,6 +1,10 @@
 package com.example.idealbroccoli.service.impl;
 
+import com.example.idealbroccoli.entity.Job;
 import com.example.idealbroccoli.service.KafkaService;
+import com.example.idealbroccoli.service.SchedulerService;
+import com.example.idealbroccoli.util.job.FlinkSparkRunnableFactory;
+import com.example.idealbroccoli.util.serilization.JobJsonSerialization;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.core.KafkaTemplate;
@@ -16,6 +20,13 @@ public class KafkaServiceImpl implements KafkaService {
     @Autowired
     KafkaTemplate<String, String> kafkaTemplate;
 
+    @Autowired
+    SchedulerService schedulerService;
+
+    @Autowired
+    FlinkSparkRunnableFactory flinkSparkRunnableFactory;
+
+
     @Override
     public void sendMessage(String message) {
         kafkaTemplate.send(TOPIC_NAME, message);
@@ -24,7 +35,10 @@ public class KafkaServiceImpl implements KafkaService {
     @Override
     @KafkaListener(topics = TOPIC_NAME, groupId = GROUP_ID)
     public void consumeMessage(String message) {
-        // TODO: execute the job and generate the according record
-        System.out.println(message);
+//        System.out.println(message + "begin");
+        Job theJob = JobJsonSerialization.deserialize(message);
+        Runnable theRunnableJob = flinkSparkRunnableFactory.newJob(theJob);
+        schedulerService.executeJobOnce(theRunnableJob);
+//        System.out.println(message + " finished");
     }
 }

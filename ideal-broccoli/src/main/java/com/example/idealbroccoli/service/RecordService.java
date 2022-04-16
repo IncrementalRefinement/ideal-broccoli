@@ -7,4 +7,6 @@ import java.util.List;
 public interface RecordService {
 
     List<Record> queryRecordByJobId(Long JobId);
+
+    void createNewRecord(Record newRecord);
 }

@@ -8,5 +8,5 @@ public interface SchedulerService {
 
     public void cancelJob(long taskId);
 
-    public void executeJobOnce(RunnableWithId job);
+    public void executeJobOnce(Runnable job);
 }

@@ -1,12 +1,11 @@
+package com.example.idealbroccoli.util.io;
+
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
-import org.apache.log4j.Logger;
-
 public class InputStreamReaderRunnable implements Runnable {
-
-    static final Logger THE_LOGGER = Logger.getLogger(InputStreamReaderRunnable.class);
 
     private String name = null;
     private BufferedReader reader = null;
@@ -15,7 +14,6 @@ public class InputStreamReaderRunnable implements Runnable {
     public InputStreamReaderRunnable(InputStream is, String name) {
         this.name = name;
         this.reader = new BufferedReader(new InputStreamReader(is));
-        THE_LOGGER.info("InputStreamReaderRunnable:  name=" + name);
     }
 
     @Override
@@ -27,9 +25,13 @@ public class InputStreamReaderRunnable implements Runnable {
                 line = reader.readLine();
             }
         } catch (Exception e) {
-            THE_LOGGER.error("run() failed. for name="+ name, e);
+            System.out.println("run() failed. for name=" + name);
         } finally {
-            InputOutputUtil.close(reader);
+            try {
+                reader.close();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 }

@@ -4,7 +4,6 @@ package com.example.idealbroccoli.controller;
 import com.example.idealbroccoli.entity.Job;
 import com.example.idealbroccoli.payload.UniversalResponse;
 import com.example.idealbroccoli.service.JobService;
-import com.example.idealbroccoli.service.UniversalJobControlService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

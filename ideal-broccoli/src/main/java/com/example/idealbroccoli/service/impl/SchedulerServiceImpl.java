@@ -26,7 +26,7 @@ public class SchedulerServiceImpl implements SchedulerService {
 
 
     @Override
-    public void executeJobOnce(RunnableWithId job) {
+    public void executeJobOnce(Runnable job) {
         threadPoolTaskScheduler.schedule(job, new Date());
     }
 
