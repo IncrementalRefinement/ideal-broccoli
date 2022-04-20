@@ -11,6 +11,21 @@ const columns = [
       title: 'Job Type',
       dataIndex: 'jobType',
       key: 'jobType',
+      render: jobType => {
+        if (jobType == "flink") {
+          return (
+            <Tag color='purple'>
+              FLINK
+            </Tag>
+          )
+        } else if (jobType == "spark"){
+          return (
+            <Tag color='orange'>
+              SPARK
+            </Tag>
+          )
+        }
+      },
   },
   {
       title: 'Scheduled Job',
@@ -47,6 +62,30 @@ const columns = [
       dataIndex: 'remark',
       key: 'remark',
   },
+  {
+    title: 'Query Record',
+    dataIndex: 'queryRecord',
+    key: 'queryRecord',
+    render: (text, record) => {
+      return (
+        <Button type="primary">
+          Query
+        </Button>
+      )
+    }
+  },
+  {
+    title: 'Delete',
+    dataIndex: 'delete',
+    key: 'delete',
+    render: (text, record) => {
+      return (
+        <Button type="primary" danger>
+          Delete
+        </Button>
+      )
+    }
+  },
 ]
 
 class JobManager extends Component {
@@ -58,7 +97,7 @@ class JobManager extends Component {
       jobList: [
         {
           "jobId": 0,
-          "jobType": "flink",
+          "jobType": "spark",
           "isScheduledJob": false,
           "executeRate": 10000,
           "jarFilePath": "TODO",
