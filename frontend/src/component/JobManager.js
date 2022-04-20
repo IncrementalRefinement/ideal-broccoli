@@ -12,19 +12,20 @@ const columns = [
       dataIndex: 'jobType',
       key: 'jobType',
       render: jobType => {
+        let color, text;
         if (jobType == "flink") {
-          return (
-            <Tag color='purple'>
-              FLINK
-            </Tag>
-          )
+          color = 'purple';
+          text = 'FLINK';
         } else if (jobType == "spark"){
-          return (
-            <Tag color='orange'>
-              SPARK
-            </Tag>
-          )
+          color = 'orange';
+          text = 'SPARK';
         }
+
+        return (
+          <Tag color={color}>
+            {text}
+          </Tag>
+        )
       },
   },
   {
@@ -32,19 +33,20 @@ const columns = [
       dataIndex: 'isScheduledJob',
       key: 'scheduledJob',
       render: scheduledJob => {
+        let color, text;
         if (scheduledJob) {
-          return (
-            <Tag color='green'>
-              TRUE
-            </Tag>
-          )
+          color = 'green';
+          text = 'TRUE';
         } else {
-          return (
-            <Tag color='geekblue'>
-              FALSE
-            </Tag>
-          )
+          color = 'geekblue';
+          text = 'FALSE';
         }
+
+        return (
+          <Tag color={color}>
+            {text}
+          </Tag>
+        )
       },
   },
   {
