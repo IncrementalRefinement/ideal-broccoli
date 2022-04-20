@@ -4,6 +4,7 @@ import com.example.idealbroccoli.payload.FileUploadResponse;
 import com.example.idealbroccoli.payload.UniversalResponse;
 import com.example.idealbroccoli.service.FileService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,6 +22,13 @@ public class FileController {
     @PostMapping
     public ResponseEntity<UniversalResponse<FileUploadResponse>> uploadFile(
             @RequestParam("file") MultipartFile file) {
-        return null;
+        String filePath = fileService.saveFile(file);
+
+        FileUploadResponse fileUploadResponse = new FileUploadResponse();
+        fileUploadResponse.setFilePath(filePath);
+        UniversalResponse<FileUploadResponse> universalResponse = new UniversalResponse<>();
+        universalResponse.setSuccess(true);
+        universalResponse.setPayload(fileUploadResponse);
+        return new ResponseEntity<>(universalResponse, HttpStatus.OK);
     }
 }
