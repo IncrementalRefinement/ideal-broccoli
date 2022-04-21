@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Layout, Button, Space } from 'antd';
+import { Layout, Button, Space, PageHeader } from 'antd';
 
 import './App.css';
 import JobManager from './component/JobManager';
@@ -12,11 +12,17 @@ class App extends Component {
     return (
       <div className="App">
         <Layout>
-          <Header style={{backgroundColor: "rgb(116, 163, 228)"}}>Big Data Management System</Header>
+          <Header style={{backgroundColor: "rgb(116, 163, 228)"}}>
+            <PageHeader
+              className="site-page-header"
+              title="Ideal-broccoli"
+              subTitle="A big data management platform"
+            />
+          </Header>
           <Content>
             <JobManager />
           </Content>
-          <Footer>Footer</Footer>
+          <Footer>Some footer goes here</Footer>
         </Layout>
       </div>
     )
