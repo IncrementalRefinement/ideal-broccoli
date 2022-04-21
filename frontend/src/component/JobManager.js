@@ -10,8 +10,8 @@ class JobManager extends Component {
     return [
       {
         title: 'Job ID',
-        dataIndex: 'jobId',
-        key: 'jobId',
+        dataIndex: 'id',
+        key: 'id',
       },
       {
           title: 'Job Type',
@@ -103,18 +103,7 @@ class JobManager extends Component {
       isRecordManagerVisible: false,
       currentJobId: undefined,
       isCreateJobManagerVisible: false,
-      jobList: [
-        {
-          "jobId": 0,
-          "jobType": "spark",
-          "isScheduledJob": false,
-          "executeRate": 10000,
-          "jarFilePath": "TODO",
-          "mainClassPath": "TODO",
-          "jobName": "testJob2",
-          "remark": "this job is for test222"
-      }
-      ]
+      jobList: null
     }
   }
   
@@ -124,7 +113,7 @@ class JobManager extends Component {
 
   handleQueryRecord = (record) => {
     const ret = () => {
-      this.setState({currentJobId: record['jobId']})
+      this.setState({currentJobId: record['id']})
       this.setState({isRecordManagerVisible: true})
     }
     return ret;
@@ -138,8 +127,9 @@ class JobManager extends Component {
   }
 
   deleteJob = (record) => {
-    // TODO
-    message.info("job deleted")
+    fetch("http://localhost:8080/api/v1/job?" + new URLSearchParams({jobId: record["id"]}), {
+      method: "Delete",
+    }).then(() => {this.queryAndUpdateAllJob();})
   }
 
   makeCreateJobManagerVisible = () => {
@@ -155,14 +145,19 @@ class JobManager extends Component {
   }
 
   queryAndUpdateAllJob = () => {
-    // TODO
-    console.log("Query all jobs")
+    fetch("http://localhost:8080/api/v1/job", {
+      method: "GET",
+    }).then(response => response.json())
+      .then((json) => {
+        // console.log(json)
+        this.setState({jobList: json["payload"]})
+      })
   }
 
   render() {
     return (
       <>
-        <RecordManager handleOk={this.handleCloseQueryRecord} visible={this.state.isRecordManagerVisible} recordId={this.state.currentJobId} />
+        <RecordManager handleOk={this.handleCloseQueryRecord} visible={this.state.isRecordManagerVisible} jobId={this.state.currentJobId} />
         <CreateJobManager handleClose={this.closeCreateJobManager} visible={this.state.isCreateJobManagerVisible}/>
         <Table  columns={this.columns()} dataSource={this.state.jobList}></Table>
         <Space>

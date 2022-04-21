@@ -40,8 +40,14 @@ class RecordManager extends Component {
     }
 
     queryJob = () => {
-        // TODO: here
-        console.log(this.props.recordId)
+        fetch("http://localhost:8080/api/v1/record?" + new URLSearchParams({jobId: this.props.jobId}), {
+            method: "GET",
+        })
+            .then(response => response.json())
+            .then((json) => {
+          // console.log(json)
+          this.setState({recordList: json["payload"]})
+        })
     }
 
     render() {

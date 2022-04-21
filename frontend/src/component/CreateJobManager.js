@@ -15,11 +15,32 @@ class CreateJobManager extends Component {
             remark: null,
             jarFilePath: null,
         }
+
+        this.uploadProps = this.uploadProps.bind(this)
     }
 
     handleOk = () => {
-        // TODO
-        console.log(this.state);
+        // 1. check the entries
+        for (const [key, value] of Object.entries(this.state)) {
+            if (value === null || value === undefined) {
+                message.warning('Please fill in all attributes');
+                return;
+            }
+        }
+        // 2. launch the request
+        const requestBody = JSON.stringify(this.state);
+        fetch("http://localhost:8080/api/v1/job", {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: requestBody
+        })
+            .then(response => response.json())
+            .then(json => {
+                console.log(json);
+            });
+            
         this.props.handleClose();
     }
 
@@ -56,21 +77,27 @@ class CreateJobManager extends Component {
         this.setState({mainClassPath: value});
     }
 
-    uploadProps = {
-        maxCount: 1,
-        name: 'file',
-        // TODO: here
-        action: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',
-        headers: {
-            authorization: 'authorization-text',
-        },
-        onChange(info) {
-            if (info.file.status === 'done') {
-                // TODO: here
-                console.log(info.file.response);
-                message.success(`${info.file.name} file uploaded successfully`);
-            } else if (info.file.status === 'error') {
-                message.error(`${info.file.name} file upload failed.`);
+    updateFilePath = (newPath) => {
+        this.setState({jarFilePath: newPath});
+    }
+
+    uploadProps = (updateFilePath) => {
+        return  {
+            maxCount: 1,
+            name: 'file',
+            action: 'http://localhost:8080/api/v1/file',
+            
+            onChange(info) {
+                if (info.file.status === 'done') {
+                    const response = info.file.response;
+                    // console.log(response);
+                    // console.log(response.payload.filePath);
+                    // console.log(typeof(response.payload.filePath));
+                    updateFilePath(response.payload.filePath);
+                    message.success(`${info.file.name} file uploaded successfully`);
+                } else if (info.file.status === 'error') {
+                    message.error(`${info.file.name} file upload failed.`);
+                }
             }
         }
     }
@@ -101,7 +128,7 @@ class CreateJobManager extends Component {
                     <Input placeholder="Main Class Path" allowClear onChange={this.updateMainClassPath} />
                     <Input placeholder="Job Name" allowClear onChange={this.updateJobName} />
                     <Input placeholder="Remark" allowClear onChange={this.updateRemark} />
-                    <Upload {...this.uploadProps}>
+                    <Upload {...this.uploadProps(this.updateFilePath)}>
                         <Button icon={<UploadOutlined />}>Click to Upload jar file</Button>
                     </Upload>
                 </Space>
