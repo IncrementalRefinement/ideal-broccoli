@@ -11,6 +11,7 @@ public class SparkRunner {
         SparkSession spark = SparkSession
                 .builder()
                 .appName("WeblogSpark")
+                .config("spark.master", "local")
                 .getOrCreate();
 
         StructType schema = new StructType()
@@ -23,15 +24,33 @@ public class SparkRunner {
         Dataset<Row> df = spark.read()
                 .option("mode", "DROPMALFORMED")
                 .schema(schema)
-                .csv("processed_log.csv");
+                .csv("./processed_log.csv");
 
         df.createOrReplaceTempView("web_log");
 
-        // TODO: here
-        Dataset<Row> sqlResult = spark.sql(
-                "SELECT COUNT(*)"
-                        + " FROM web_log");
+        Dataset<Row> top10Ip= spark.sql(
+                "SELECT ID, COUNT(*) as frequency"
+                        + " FROM web_log"
+                        + " GROUP BY ID"
+                        + " ORDER BY frequency DESC"
+                        + " LIMIT 10");
+        top10Ip.show();
 
-        sqlResult.show(); //for testing
+        Dataset<Row> top10Url= spark.sql(
+                "SELECT URL, COUNT(*) as frequency"
+                        + " FROM web_log"
+                        + " GROUP BY URL"
+                        + " ORDER BY frequency DESC"
+                        + " LIMIT 10");
+        top10Url.show();
+
+        Dataset<Row> timeFrequency= spark.sql(
+                "SELECT HOUR, COUNT(*) as frequency"
+                        + " FROM web_log"
+                        + " GROUP BY HOUR"
+                        + " ORDER BY HOUR");
+        timeFrequency.show();
+
+        // TODO: convert the Dataset<Row> to csv file and write it to the output
     }
 }
