@@ -35,6 +35,7 @@ public class SparkRunner {
                         + " ORDER BY frequency DESC"
                         + " LIMIT 10");
         top10Ip.show();
+        top10Ip.write().format("csv").save("top10Ip.csv");
 
         Dataset<Row> top10Url= spark.sql(
                 "SELECT URL, COUNT(*) as frequency"
@@ -43,6 +44,7 @@ public class SparkRunner {
                         + " ORDER BY frequency DESC"
                         + " LIMIT 10");
         top10Url.show();
+        top10Url.write().format("csv").save("top10url.csv");
 
         Dataset<Row> timeFrequency= spark.sql(
                 "SELECT HOUR, COUNT(*) as frequency"
@@ -50,7 +52,6 @@ public class SparkRunner {
                         + " GROUP BY HOUR"
                         + " ORDER BY HOUR");
         timeFrequency.show();
-
-        // TODO: convert the Dataset<Row> to csv file and write it to the output
+        timeFrequency.write().format("csv").save("timeFrequency.csv");
     }
 }
