@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class KafkaServiceImpl implements KafkaService {
 
-    // TODO: read this from application.properties
     private static final String GROUP_ID = "spark_event_group";
     private static final String TOPIC_NAME = "spark_event_topic";
 
