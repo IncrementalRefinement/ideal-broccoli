@@ -10,7 +10,7 @@ public class Preprocessor {
     public static void main(String[] args) throws IOException {
         File rawLog = new File(RAW_FILE_LOCATION);
         PrintWriter resultFile = new PrintWriter(RESULT_FILE_LOCATION, "UTF-8");
-        resultFile.println("ID,TIME,URL");
+        resultFile.println("ID,DATE,HOUR,MINUTE,URL");
 
         BufferedReader br = new BufferedReader(new FileReader(rawLog));
         String line;
@@ -22,7 +22,15 @@ public class Preprocessor {
             StringBuilder sb = new StringBuilder();
             sb.append(splited[0]);
             sb.append(',');
-            sb.append(splited[3].substring(1));
+            String timeStamp = splited[3].substring(1);
+            String date = timeStamp.substring(0, 11);
+            String hour = timeStamp.substring(12, 14);
+            String minute = timeStamp.substring(15, 17);
+            sb.append(date);
+            sb.append(',');
+            sb.append(hour);
+            sb.append(',');
+            sb.append(minute);
             sb.append(',');
             sb.append(splited[6]);
             resultFile.println(sb.toString());
