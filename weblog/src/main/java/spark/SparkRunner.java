@@ -8,12 +8,14 @@ import org.apache.spark.sql.types.StructType;
 public class SparkRunner {
 
     public static void main(String[] args) {
+        // 创建 Spark Session
         SparkSession spark = SparkSession
                 .builder()
                 .appName("WeblogSpark")
                 .config("spark.master", "local")
                 .getOrCreate();
 
+        // 将 csv 转换为 Dataset<Row>，从而支持 Spark SQL
         StructType schema = new StructType()
                 .add("ID", "string")
                 .add("DATE", "string")
@@ -28,6 +30,7 @@ public class SparkRunner {
 
         df.createOrReplaceTempView("web_log");
 
+        // top10 IP
         Dataset<Row> top10Ip= spark.sql(
                 "SELECT ID, COUNT(*) as frequency"
                         + " FROM web_log"
@@ -37,6 +40,7 @@ public class SparkRunner {
         top10Ip.show();
         top10Ip.write().format("csv").save("top10Ip.csv");
 
+        // top10 URL
         Dataset<Row> top10Url= spark.sql(
                 "SELECT URL, COUNT(*) as frequency"
                         + " FROM web_log"
@@ -46,6 +50,7 @@ public class SparkRunner {
         top10Url.show();
         top10Url.write().format("csv").save("top10url.csv");
 
+        // 时间与访问频率的关系
         Dataset<Row> timeFrequency= spark.sql(
                 "SELECT HOUR, COUNT(*) as frequency"
                         + " FROM web_log"

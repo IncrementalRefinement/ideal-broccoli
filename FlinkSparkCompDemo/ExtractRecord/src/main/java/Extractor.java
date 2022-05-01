@@ -11,12 +11,14 @@ import java.util.Properties;
 
 public class Extractor {
 
+    // Kafka 配置项
     private final static String BOOTSTRAP_SERVERS = "localhost:9092";
     // private final static String TOPIC_NAME = "spark_flink_comp_topic_test";
     private final static String TOPIC_NAME = "spark_flink_comp_topic_test_output";
 
     public static void main(String[] args) throws IOException {
 
+        // 配置 Kafka Properties
         PrintWriter writer = new PrintWriter(TOPIC_NAME + ".csv", StandardCharsets.UTF_8);
 
         Properties kafkaProp = new Properties();
@@ -31,6 +33,7 @@ public class Extractor {
 
         Consumer<String, String> consumer = new KafkaConsumer<>(kafkaProp);
 
+        // 通过 Consumer 获取主题下的消息
         consumer.subscribe(Collections.singletonList(TOPIC_NAME));
         consumer.poll(0);
         consumer.seekToBeginning(consumer.assignment());

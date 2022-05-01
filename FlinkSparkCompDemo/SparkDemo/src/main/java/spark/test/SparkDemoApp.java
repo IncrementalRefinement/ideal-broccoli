@@ -14,13 +14,14 @@ public class SparkDemoApp {
     private static final String INPUT_FILE = "/home/xabi/Documents/Code/ideal-broccoli/FlinkSparkCompDemo/SparkDemo/spark_flink_comp_topic_test.csv";
 
     public static void main(String[] args) {
+        // 创建 SparkSession，读入文件，生成 DataSet
         SparkSession spark = SparkSession
                                     .builder()
                                     .appName("Simple Application")
                                     .getOrCreate();
         Dataset<String> logData = spark.read().textFile(INPUT_FILE).cache();
+        // 通过 Map 操作进行处理
         Dataset<String> res = logData.map((MapFunction<String, String>) SparkDemoApp::processElement, Encoders.STRING());
-        // res.show((int) res.count());
         System.out.println("===========================");
         System.out.println(res.count());
         System.out.println("===========================");

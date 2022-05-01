@@ -20,6 +20,7 @@ public class SchedulerServiceImpl implements SchedulerService {
     ThreadPoolTaskScheduler threadPoolTaskScheduler;
 
     public void registerJob(RunnableWithId job, long rate) {
+        // 通过 ThreadPoolTaskScheduler 定时线程池注册定时任务，并缓存 ScheduledFuture
         ScheduledFuture<?> future = threadPoolTaskScheduler.scheduleAtFixedRate(job, rate);
         registeredSchedulers.put(job.getId(), future);
     }
@@ -31,6 +32,7 @@ public class SchedulerServiceImpl implements SchedulerService {
     }
 
     public void cancelJob(long jobId) {
+        // 通过 ScheduledFuture 从线程池中删除定时任务
         ScheduledFuture<?> future = registeredSchedulers.get(jobId);
         future.cancel(false);
         registeredSchedulers.remove(jobId);

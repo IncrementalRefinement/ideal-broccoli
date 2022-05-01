@@ -19,6 +19,7 @@ public class FlinkServiceImpl implements FlinkService {
 
     @Override
     public void addJob(Job theJob) {
+        // 生成 RunnableWithId 任务并通过 SchedulerService 加入定时任务
         RunnableWithId runnableWithId = eventProducerRunnableFactory.newJob(theJob);
         if (theJob.getScheduledJob()) {
             schedulerService.registerJob(runnableWithId, theJob.getExecuteRate());

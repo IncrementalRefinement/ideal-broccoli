@@ -25,19 +25,20 @@ public class KafkaServiceImpl implements KafkaService {
     @Autowired
     FlinkSparkRunnableFactory flinkSparkRunnableFactory;
 
-
+    // 投递消息
     @Override
     public void sendMessage(String message) {
         kafkaTemplate.send(TOPIC_NAME, message);
     }
 
+    // 消费消息，生成可执行对象
     @Override
     @KafkaListener(topics = TOPIC_NAME, groupId = GROUP_ID)
     public void consumeMessage(String message) {
-//        System.out.println(message + "begin");
+        // System.out.println(message + "begin");
         Job theJob = JobJsonSerialization.deserialize(message);
         Runnable theRunnableJob = flinkSparkRunnableFactory.newJob(theJob);
         schedulerService.executeJobOnce(theRunnableJob);
-//        System.out.println(message + " finished");
+        // System.out.println(message + " finished");
     }
 }

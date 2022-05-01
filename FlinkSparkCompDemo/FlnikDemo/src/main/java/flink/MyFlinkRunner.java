@@ -14,7 +14,7 @@ import org.apache.flink.connector.kafka.source.enumerator.initializer.OffsetsIni
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 
 public class MyFlinkRunner {
-
+    // Kafka 配置项
     private final static String BOOTSTRAP_SERVER = "localhost:9092";
     private final static String INPUT_TOPIC = "spark_flink_comp_topic_test";
     private final static String OUTPUT_TOPIC = "spark_flink_comp_topic_test_output";
@@ -24,6 +24,7 @@ public class MyFlinkRunner {
     public static void main(String[] args) throws Exception {
         StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
 
+        // Kafka 输入源
         KafkaSource<String> kafkaSource = KafkaSource.<String>builder()
                 .setBootstrapServers(BOOTSTRAP_SERVER)
                 .setTopics(INPUT_TOPIC)
@@ -34,8 +35,10 @@ public class MyFlinkRunner {
 
         DataStreamSource<String> inputStream = env.fromSource(kafkaSource, WatermarkStrategy.noWatermarks(), "Kafka Source");
 
+        // 对输入流进行分析
         DataStream<String> outputStream = inputStream.process(new PrimeNumberFinder());
 
+        // Kafka 输出
         KafkaSink<String> sink = KafkaSink.<String>builder()
                 .setBootstrapServers(BOOTSTRAP_SERVER)
                 .setRecordSerializer(KafkaRecordSerializationSchema.builder()
