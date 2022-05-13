@@ -17,6 +17,22 @@ const columns = [
         title: 'Success',
         dataIndex: 'success',
         key: 'success',
+        render: success => {
+            let color, text;
+            if (success) {
+              color = 'blue';
+              text = 'SUCCESS';
+            } else {
+              color = 'black';
+              text = 'FAIL';
+            }
+    
+            return (
+              <Tag color={color}>
+                {text}
+              </Tag>
+            )
+        },
     },
     {
         title: 'Begin Time',

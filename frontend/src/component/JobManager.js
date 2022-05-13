@@ -36,7 +36,7 @@ class JobManager extends Component {
       },
       {
           title: 'Scheduled Job',
-          dataIndex: 'isScheduledJob',
+          dataIndex: 'scheduledJob',
           key: 'scheduledJob',
           render: scheduledJob => {
             let color, text;
