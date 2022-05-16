@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Space, Table, Tag, message } from 'antd';
+import { Button, Space, Table, Tag } from 'antd';
 
 import RecordManager from "./RecordManager";
 import CreateJobManager from "./CreateJobManager";
@@ -19,10 +19,10 @@ class JobManager extends Component {
           key: 'jobType',
           render: jobType => {
             let color, text;
-            if (jobType == "flink") {
+            if (jobType === "flink") {
               color = 'purple';
               text = 'FLINK';
-            } else if (jobType == "spark"){
+            } else if (jobType === "spark"){
               color = 'orange';
               text = 'SPARK';
             }
